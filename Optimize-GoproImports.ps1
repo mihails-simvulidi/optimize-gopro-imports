@@ -124,9 +124,16 @@ try {
             Write-DriveFreeSpace -Drive $drive
         }
 
-        # Postpone execution till the next minute so that the we can check for script modifications right before the next scheduled run
+        # Sleep until the end of the current minute to allow checking for script modifications and exit just before the next scheduled run, ensuring the script reloads with any updates.
         $currentTime = Get-Date
-        Start-Sleep -Milliseconds (60000 - $currentTime.Second * 1000 - $currentTime.Millisecond)
+        $endOfCurrentMinute = Get-Date -Date $currentTime.Date -Hour $currentTime.Hour -Minute $currentTime.Minute -Second 59
+        if ($currentTime -ge $endOfCurrentMinute) {
+            $sleepUntil = $endOfCurrentMinute.AddMinutes(1)
+        }
+        else {
+            $sleepUntil = $endOfCurrentMinute
+        }
+        Start-Sleep -Duration ($sleepUntil - $currentTime)
 
         if ((Get-ScriptLastWriteTime) -gt $scriptLastWriteTime) {
             Write-Log "Script has been modified — exiting."
