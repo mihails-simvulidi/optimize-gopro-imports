@@ -78,7 +78,7 @@ function Write-Log {
     Write-Host "$(Get-Date -Format "yyyy-MM-dd HH:mm:ss.fff") $Message"
 }
 
-Start-Transcript -Append -LiteralPath "$LogFilePath$(Get-Date -Format "yyyy-MM-dd_HH-mm").log"
+Start-Transcript -Append -LiteralPath "$LogFilePath$(Get-Date -Format "yyyy-MM-dd-HH-mm").log"
 
 try {
     $normalizedImportPath = (Get-Item $ImportPath).FullName.TrimEnd([IO.Path]::DirectorySeparatorChar)
@@ -95,7 +95,7 @@ try {
 
     Register-ObjectEvent -InputObject $watcher -EventName Deleted -Action {
         # Write-Log "Directory or file deletion detected: $($Event.SourceEventArgs.FullPath)"
-        Split-Path -Path $Event.SourceEventArgs.FullPath | Get-Item | Remove-DirectoryIfEmpty
+        Split-Path -Path $Event.SourceEventArgs.FullPath | Remove-DirectoryIfEmpty
     } | Out-Null
 
     $watcher.EnableRaisingEvents = $true
