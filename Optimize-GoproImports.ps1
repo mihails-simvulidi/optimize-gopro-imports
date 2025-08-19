@@ -87,14 +87,14 @@ try {
     $watcher.Path = $ImportPath
 
     Register-ObjectEvent -InputObject $watcher -EventName Created -Action {
-        Write-Log "Directory or file creation detected: $($Event.SourceEventArgs.FullPath)"
+        # Write-Log "Directory or file creation detected: $($Event.SourceEventArgs.FullPath)"
         if ($Event.SourceEventArgs.Name -ilike $duplicateFilter -or (Split-Path -Extension -Path $Event.SourceEventArgs.Name) -iin '.LRV', '.THM') {
             Remove-File -ErrorAction SilentlyContinue -File $Event.SourceEventArgs.FullPath
         }
     } | Out-Null
 
     Register-ObjectEvent -InputObject $watcher -EventName Deleted -Action {
-        Write-Log "Directory or file deletion detected: $($Event.SourceEventArgs.FullPath)"
+        # Write-Log "Directory or file deletion detected: $($Event.SourceEventArgs.FullPath)"
         Split-Path -Path $Event.SourceEventArgs.FullPath | Get-Item | Remove-DirectoryIfEmpty
     } | Out-Null
 
