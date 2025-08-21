@@ -88,7 +88,7 @@ try {
 
     Register-ObjectEvent -InputObject $watcher -EventName Created -Action {
         # Write-Log "Directory or file creation detected: $($Event.SourceEventArgs.FullPath)"
-        if ($Event.SourceEventArgs.Name -ilike $duplicateFilter -or (Split-Path -Extension -Path $Event.SourceEventArgs.Name) -iin '.LRV', '.THM') {
+        if ((Split-Path -Extension -Path $Event.SourceEventArgs.Name) -iin '.LRV', '.THM') {
             Remove-File -ErrorAction SilentlyContinue -File $Event.SourceEventArgs.FullPath
         }
     } | Out-Null
@@ -102,9 +102,6 @@ try {
 
     Get-ChildItem -File -Filter *.LRV -Force -LiteralPath $ImportPath -Recurse | Remove-File
     Get-ChildItem -File -Filter *.THM -Force -LiteralPath $ImportPath -Recurse | Remove-File
-
-    $duplicateFilter = '* (*).*'
-    Get-ChildItem -File -Filter $duplicateFilter -Force -LiteralPath $ImportPath -Recurse | Remove-File
 
     Get-ChildItem -Directory -Force -LiteralPath $ImportPath -Recurse | Remove-DirectoryIfEmpty
 
