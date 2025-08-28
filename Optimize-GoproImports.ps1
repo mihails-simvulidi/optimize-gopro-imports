@@ -2,7 +2,7 @@ param (
     [Parameter(Mandatory)]
     [string]$ImportPath,
 
-    [long]$MinimumFreeBytes = 1GB,
+    [long]$MinimumFreeBytes = 2GB,
 
     [string]$LogFilePath = "logs$([IO.Path]::DirectorySeparatorChar)"
 )
