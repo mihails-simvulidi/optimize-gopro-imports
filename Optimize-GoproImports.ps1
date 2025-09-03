@@ -41,7 +41,7 @@ function Remove-DirectoryIfEmpty {
         $normalizedDirectoryPath = $Directory.FullName.TrimEnd([IO.Path]::DirectorySeparatorChar)
         if ($normalizedDirectoryPath.Length -gt $normalizedImportPath.Length -and
             $normalizedDirectoryPath.StartsWith($normalizedImportPath, [StringComparison]::OrdinalIgnoreCase) -and
-            -not (Get-ChildItem -Force -LiteralPath $Directory)
+            -not (Get-ChildItem -Force -LiteralPath $Directory.FullName)
         ) {
             Write-Log "Deleting empty directory $Directory..."
             Remove-Item -Force -LiteralPath $Directory.FullName
@@ -89,7 +89,7 @@ try {
     Register-ObjectEvent -InputObject $watcher -EventName Created -Action {
         # Write-Log "Directory or file creation detected: $($Event.SourceEventArgs.FullPath)"
         if ((Split-Path -Extension -Path $Event.SourceEventArgs.Name) -iin '.LRV', '.THM') {
-            Remove-File -ErrorAction SilentlyContinue -File $Event.SourceEventArgs.FullPath
+            Remove-File -File $Event.SourceEventArgs.FullPath
         }
     } | Out-Null
 
