@@ -100,8 +100,8 @@ try {
 
     $watcher.EnableRaisingEvents = $true
 
-    Get-ChildItem -File -Filter *.LRV -Force -LiteralPath $ImportPath -Recurse | Remove-File
-    Get-ChildItem -File -Filter *.THM -Force -LiteralPath $ImportPath -Recurse | Remove-File
+    Get-ChildItem -File -Filter *.LRV -Force -LiteralPath $ImportPath -Recurse | Remove-File -ErrorAction SilentlyContinue
+    Get-ChildItem -File -Filter *.THM -Force -LiteralPath $ImportPath -Recurse | Remove-File -ErrorAction SilentlyContinue
 
     Get-ChildItem -Directory -Force -LiteralPath $ImportPath -Recurse | Remove-DirectoryIfEmpty
 
