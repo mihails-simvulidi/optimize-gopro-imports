@@ -89,7 +89,7 @@ try {
     Register-ObjectEvent -InputObject $watcher -EventName Created -Action {
         # Write-Log "Directory or file creation detected: $($Event.SourceEventArgs.FullPath)"
         if ((Split-Path -Extension -Path $Event.SourceEventArgs.Name) -iin '.LRV', '.THM') {
-            Remove-File -File $Event.SourceEventArgs.FullPath
+            Remove-File -ErrorAction SilentlyContinue -File $Event.SourceEventArgs.FullPath
         }
     } | Out-Null
 
@@ -100,8 +100,8 @@ try {
 
     $watcher.EnableRaisingEvents = $true
 
-    Get-ChildItem -File -Filter *.LRV -Force -LiteralPath $ImportPath -Recurse | Remove-File -ErrorAction SilentlyContinue
-    Get-ChildItem -File -Filter *.THM -Force -LiteralPath $ImportPath -Recurse | Remove-File -ErrorAction SilentlyContinue
+    Get-ChildItem -File -Filter *.LRV -Force -LiteralPath $ImportPath -Recurse | Remove-File
+    Get-ChildItem -File -Filter *.THM -Force -LiteralPath $ImportPath -Recurse | Remove-File
 
     Get-ChildItem -Directory -Force -LiteralPath $ImportPath -Recurse | Remove-DirectoryIfEmpty
 
