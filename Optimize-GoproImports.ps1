@@ -4,7 +4,7 @@ param (
 
     [long]$MinimumFreeBytes = 8GB,
 
-    [string]$LogFilePath = "logs$([IO.Path]::DirectorySeparatorChar)"
+    [string]$LogFilePath = "$PSScriptRoot\logs$([IO.Path]::DirectorySeparatorChar)"
 )
 
 function Get-HumanReadableSize {
