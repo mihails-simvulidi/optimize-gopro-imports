@@ -2,7 +2,7 @@ param (
     [Parameter(Mandatory)]
     [string]$ImportPath,
 
-    [long]$MinimumFreeBytes = 8GB,
+    [long]$MinimumFreeBytes = 10GB,
 
     [string]$LogFilePath = "$PSScriptRoot\logs$([IO.Path]::DirectorySeparatorChar)"
 )
