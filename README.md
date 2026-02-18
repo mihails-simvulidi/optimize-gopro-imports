@@ -3,5 +3,5 @@ PowerShell script which deletes unnecessary files having extensions .LRV and .TH
 
 Parameters:
 1. **ImportPath** (required) — path of the directory containing imported files.
-1. **MinimumFreeBytes** (default: 1GB) — delete the oldest videos if free disk space is below this.
+1. **MinimumFreeBytes** (default: 16GB) — delete the oldest videos if free disk space is below this.
 1. **LogFilePath** (default: directory logs in working directory)
